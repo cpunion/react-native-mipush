@@ -9,7 +9,7 @@ npm install --save react-native-mipush
 
 ## Android
 
-MainActivity.java 添加以下代码:
+* MainActivity.java 添加以下代码:
 
 ```
 // ...
@@ -38,6 +38,24 @@ public class MainActivity extends ReactActivity {
             new MainReactPackage(),
             mMiPushPackage,         // <------ Add into package list
     // ...
+```
+
+* AndroidManafest.xml 中修改 application 的 android:name 为 `com.xiaomi.push.reactnative.MiPushApplication`，并添加你的 MIPUSH_APP_ID 和 MIPUSH_APP_KEY：
+
+**注意：由于小米的 AppID 和 AppKey 都是纯数字，需要在前面加上 `\ ` 来转义！**
+
+```
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.applean.apprunner"
+    android:versionCode="1"
+    android:versionName="1.0.0">
+    <application
+      android:name="com.xiaomi.push.reactnative.MiPushApplication"  <----- 这里
+
+      ....
+
+      <meta-data android:value="\ 12345678901234567890" android:name="MIPUSH_APP_ID" />
+      <meta-data android:value="\ 12345678" android:name="MIPUSH_APP_KEY" />
 ```
 
 ## iOS
