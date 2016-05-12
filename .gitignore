@@ -1,0 +1,9 @@
+android/build/
+android/app/gradle/
+android/app/build/
+.idea/
+*.iml
+gradlew*
+local.properties
+xcuserdata/
+project.xcworkspace/
