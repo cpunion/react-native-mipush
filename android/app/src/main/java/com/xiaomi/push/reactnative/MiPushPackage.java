@@ -19,6 +19,7 @@ public class MiPushPackage implements ReactPackage {
 
     public MiPushPackage(Activity activity) {
         mActivity = activity;
+        onIntent(mActivity.getIntent());
     }
 
     public void onIntent(Intent intent) {
