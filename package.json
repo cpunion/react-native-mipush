@@ -1,6 +1,25 @@
 {
   "name": "react-native-mipush",
   "version": "0.0.1",
-  "keywords": "react-native",
-  "main": "index.js"
+  "keywords": [
+    "react-native",
+    "xiaomi",
+    "mipush",
+    "push"
+  ],
+  "main": "index.js",
+  "description": "小米 Push 的 React Native 封装。",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cpunion/react-native-mipush.git"
+  },
+  "author": "Li Jie <cpunion@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cpunion/react-native-mipush/issues"
+  },
+  "homepage": "https://github.com/cpunion/react-native-mipush#readme"
 }
