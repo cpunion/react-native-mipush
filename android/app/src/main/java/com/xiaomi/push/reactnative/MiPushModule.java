@@ -131,6 +131,9 @@ public class MiPushModule extends ReactContextBaseJavaModule {
 
     private void processIntent(Intent intent) {
         WritableMap params = getDataOfIntent(intent);
+        if (params != null) {
+            params.putString("type", "NOTIFICATION_MESSAGE_CLICKED");
+        }
         sendEvent(params);
     }
 
