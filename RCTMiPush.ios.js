@@ -11,9 +11,7 @@ var MiPush = require('react-native').NativeModules.MiPush;
 
 var RCTMiPush = {
   getInitialMessage: function() {
-    return new Promise(() => {
-      Promise.resolve(null)
-    });
+    return MiPush.getInitialMessage();
   },
 
   registerMiPush: function () {

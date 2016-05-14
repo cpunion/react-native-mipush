@@ -80,12 +80,12 @@ AppDelegate.m 添加以下代码
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // ...
-    NSDictionary *userInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+    NSDictionary *initialProperties = [RCTMiPush initAndGetInitialPropertiesFromLaunchOptions:launchOptions];
     // ...
     RCTRootView *rootView =
         [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                     moduleName:@"RNTest"
-                             initialProperties:userInfo  // <-- 修改这里
+                             initialProperties:initialProperties  // <-- 修改这里
                               launchOptions:launchOptions];
     // ...
 }
@@ -111,10 +111,6 @@ AppDelegate.m 添加以下代码
 {
   [RCTMiPush didReceiveRemoteNotification:notification];
 }
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler
-{
-  NSLog(@"received slient remote notification: %@", notification);
-}
 // Required for the localNotification event.
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
@@ -134,7 +130,7 @@ import MiPush from 'react-native-mipush'
 
 ## 2.获取启动参数，用于响应点击 Push 消息跳转到应用内
 
-Android:
+方法1：
 ```
     MiPush.getInitialMessage()
     .then((message) => {
@@ -142,7 +138,7 @@ Android:
     })
 ```
 
-iOS: 通过根 Component 的 props 获取
+方法2: 通过根 Component 的 props 获取
 
 ## 3.启动后点击的新消息
 
@@ -167,7 +163,7 @@ iOS:
 
 # 限制
 
-由于 React Native 的 JS 代码只有 Activity 在前台时才可执行，所以在 Activity 在前台时能够处理所有消息，不在前台时只能处理点击打开界面的通知栏消息。
+由于 React Native 的 JS 代码只有 UI 在前台时才可执行，所以在 Activity 在前台时能够处理所有消息，不在前台时只能处理点击打开界面的通知栏消息。
 
 # License
 

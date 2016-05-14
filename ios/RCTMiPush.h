@@ -10,4 +10,5 @@
 + (void)didReceiveRemoteNotification:(NSDictionary *)notification;
 + (void)didReceiveLocalNotification:(UILocalNotification *)notification;
 
++ (NSDictionary *)initAndGetInitialPropertiesFromLaunchOptions:(NSDictionary *)launchOptions;
 @end

@@ -83,7 +83,7 @@ public class MiPushModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getInitialMessage(Promise promise) {
-        WritableMap params = getDataOfIntent(mIntent);
+        WritableMap params = MiPushHelper.getDataOfIntent(mIntent);
         // Add missing NOTIFICATION_MESSAGE_CLICKED message in PushMessageReceiver
         if (params != null) {
             params.putString("type", "NOTIFICATION_MESSAGE_CLICKED");
@@ -191,38 +191,8 @@ public class MiPushModule extends ReactContextBaseJavaModule {
 
     }
 
-    private WritableMap getDataOfIntent(Intent intent) {
-        if (intent == null) {
-            return null;
-        }
-
-        final Set<String> categories = new HashSet<String>(Arrays.asList(Intent.CATEGORY_LAUNCHER));
-        if (intent.getAction() != Intent.ACTION_MAIN || !categories.equals(intent.getCategories())) {
-            return null;
-        }
-
-        MiPushMessage message = (MiPushMessage)intent.getSerializableExtra(PushMessageHelper.KEY_MESSAGE);
-        if (message == null) {
-            return null;
-        }
-
-        Bundle bundle = message.toBundle();
-        HashMap<String, String> extra = (HashMap<String, String>)bundle.getSerializable("extra");
-        if (extra != null) {
-            Bundle extraBundle = new Bundle();
-            for (String key: extra.keySet()) {
-                String value = extra.get(key);
-                extraBundle.putString(key, value);
-            }
-            bundle.putBundle("extra", extraBundle);
-        }
-
-        WritableMap params = Arguments.fromBundle(bundle);
-        return params;
-    }
-
     private void processIntent(Intent intent) {
-        WritableMap params = getDataOfIntent(intent);
+        WritableMap params = MiPushHelper.getDataOfIntent(intent);
         if (params != null) {
             params.putString("type", "NOTIFICATION_MESSAGE_CLICKED");
         }

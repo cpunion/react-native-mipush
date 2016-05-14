@@ -9,6 +9,8 @@ NSString *const MiPush_didRegisterForRemoteNotificationsWithDeviceToken = @"MiPu
 NSString *const MiPush_didReceiveRemoteNotification = @"MiPush_didReceiveRemoteNotification";
 NSString *const MiPush_didReceiveLocalNotification = @"MiPush_didReceiveLocalNotification";
 
+static NSDictionary * sInitialProperties = NULL;
+
 @implementation RCTMiPush
 
 + (void)didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
@@ -63,6 +65,23 @@ NSString *const MiPush_didReceiveLocalNotification = @"MiPush_didReceiveLocalNot
     [[NSNotificationCenter defaultCenter] postNotificationName:MiPush_didReceiveLocalNotification
                                                         object:self
                                                       userInfo:details];
+}
+
++ (NSDictionary *)initAndGetInitialPropertiesFromLaunchOptions:(NSDictionary *)launchOptions
+{
+    NSMutableDictionary *initialProperties = [[NSMutableDictionary alloc] init];
+    NSDictionary *remoteNotification = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+    NSDictionary *localNotification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey];
+
+    if (remoteNotification) {
+        [initialProperties setObject:remoteNotification forKey:@"remoteNotification"];
+    }
+    if (localNotification) {
+        [initialProperties setObject:localNotification forKey:@"localNotification"];
+    }
+
+    sInitialProperties = initialProperties;
+    return initialProperties;
 }
 
 RCT_EXPORT_MODULE()
@@ -169,6 +188,12 @@ RCT_EXPORT_MODULE()
     });
 }
 
+RCT_EXPORT_METHOD(getInitialMessage:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    resolve(sInitialProperties);
+}
+
 RCT_EXPORT_METHOD(registerMiPush)
 {
     [MiPushSDK registerMiPush:self];
@@ -253,8 +278,7 @@ RCT_EXPORT_METHOD(getAllTopicAsync)
     [MiPushSDK getAllTopicAsync];
 }
 
-RCT_REMAP_METHOD(getSDKVersion,
-                 resolver:(RCTPromiseResolveBlock)resolve
+RCT_EXPORT_METHOD(getSDKVersion:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
     NSString * sdkVersion = [MiPushSDK getSDKVersion];
