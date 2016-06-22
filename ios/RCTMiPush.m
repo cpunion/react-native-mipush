@@ -44,6 +44,11 @@ static NSDictionary * sInitialProperties = NULL;
 // Required for the notification event.
 + (void)didReceiveRemoteNotification:(NSDictionary *)notification
 {
+    NSString *messageId = [notification objectForKey:@"_id_"];
+    if (messageId != nil) {
+        [MiPushSDK openAppNotify:messageId];
+    }
+
     // 针对长连接做了消息排重合并，只在下面处理即可
     [MiPushSDK handleReceiveRemoteNotification: notification];
 
@@ -74,6 +79,10 @@ static NSDictionary * sInitialProperties = NULL;
     NSDictionary *localNotification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey];
 
     if (remoteNotification) {
+        NSString *messageId = [remoteNotification objectForKey:@"_id_"];
+        if (messageId != nil) {
+            [MiPushSDK openAppNotify:messageId];
+        }
         [initialProperties setObject:remoteNotification forKey:@"remoteNotification"];
     }
     if (localNotification) {
