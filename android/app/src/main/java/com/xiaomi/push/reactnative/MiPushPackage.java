@@ -13,14 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MiPushPackage implements ReactPackage {
-    private Activity mActivity;
     private MiPushModule mMiPushModule;
     private Intent mIntent;
-
-    public MiPushPackage(Activity activity) {
-        mActivity = activity;
-        onIntent(mActivity.getIntent());
-    }
 
     public void onIntent(Intent intent) {
         if (mMiPushModule != null) {
@@ -32,7 +26,7 @@ public class MiPushPackage implements ReactPackage {
 
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactApplicationContext) {
-        mMiPushModule = new MiPushModule(reactApplicationContext, mActivity);
+        mMiPushModule = new MiPushModule(reactApplicationContext);
         if (mIntent != null) {
             mMiPushModule.onIntent(mIntent);
             mIntent = null;

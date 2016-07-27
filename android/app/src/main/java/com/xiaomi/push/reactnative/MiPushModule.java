@@ -35,10 +35,11 @@ import java.util.Arrays;
 public class MiPushModule extends ReactContextBaseJavaModule {
     private Intent mIntent;
 
-    public MiPushModule(ReactApplicationContext context, final Activity activity) {
+    public MiPushModule(ReactApplicationContext context) {
         super(context);
 
         final ReactApplicationContext ctx = context;
+        final Activity activity = getCurrentActivity();
 
         final BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
