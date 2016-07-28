@@ -1,6 +1,5 @@
 package com.xiaomi.push.reactnative;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -39,7 +38,6 @@ public class MiPushModule extends ReactContextBaseJavaModule {
         super(context);
 
         final ReactApplicationContext ctx = context;
-        final Activity activity = getCurrentActivity();
 
         final BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
@@ -51,7 +49,7 @@ public class MiPushModule extends ReactContextBaseJavaModule {
             }
         };
 
-        final LocalBroadcastManager mgr = LocalBroadcastManager.getInstance(activity);
+        final LocalBroadcastManager mgr = LocalBroadcastManager.getInstance(context);
 
         LifecycleEventListener listener = new LifecycleEventListener() {
             public void onHostResume() {
