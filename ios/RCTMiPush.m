@@ -1,8 +1,8 @@
 #import "RCTMiPush.h"
-#import "RCTBridge.h"
-#import "RCTEventDispatcher.h"
-#import "RCTConvert.h"
-#import "RCTUtils.h"
+#import "React/RCTBridge.h"
+#import "React/RCTEventDispatcher.h"
+#import "React/RCTConvert.h"
+#import "React/RCTUtils.h"
 
 NSString *const MiPush_didFailToRegisterForRemoteNotificationsWithError = @"MiPush_didFailToRegisterForRemoteNotificationsWithError";
 NSString *const MiPush_didRegisterForRemoteNotificationsWithDeviceToken = @"MiPush_didRegisterForRemoteNotificationsWithDeviceToken";
@@ -233,7 +233,7 @@ RCT_EXPORT_METHOD(bindDeviceToken:(NSString *)hexDeviceToken)
         unsigned char c = strtol(bytes, NULL, 16);
         [deviceToken appendBytes:&c length:1];
     }
-    
+
     [MiPushSDK bindDeviceToken:deviceToken];
 }
 

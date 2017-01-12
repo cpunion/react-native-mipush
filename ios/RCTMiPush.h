@@ -1,5 +1,5 @@
 #import <UIKit/UIKit.h>
-#import "RCTBridgeModule.h"
+#import "React/RCTBridgeModule.h"
 #import "MiPushSDK.h"
 
 @interface RCTMiPush : NSObject <RCTBridgeModule, MiPushSDKDelegate>
